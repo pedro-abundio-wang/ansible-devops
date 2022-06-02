@@ -1,0 +1,13 @@
+- name: Uninstall nfs server
+  apt:
+    name: "{{ packages }}"
+    state: absent
+    update_cache: yes
+  vars:
+    packages:
+      - nfs-kernel-server
+
+- name: Clean nfs data
+  file:
+    path: /home/nfs
+    state: absent

@@ -1,0 +1,19 @@
+- name: Uninstall docker and its dependecies
+  apt:
+    name: "{{ packages }}"
+    state: absent
+    update_cache: yes
+  vars:
+    packages:
+      - docker-ce={{ docker_version }}
+      - docker-ce-cli={{ docker_version }}
+      - containerd.io
+      - docker-compose-plugin
+
+- name: Clean docker data
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - /var/lib/docker
+    - /var/lib/containerd

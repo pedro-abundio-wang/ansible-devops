@@ -1,0 +1,18 @@
+- name: Umount nfs folder
+  mount:
+    path: /home/nfs
+    state: unmounted
+
+- name: Uninstall nfs client
+  apt:
+    name: "{{ packages }}"
+    state: absent
+    update_cache: yes
+  vars:
+    packages:
+      - nfs-common
+
+- name: Clean nfs data
+  file:
+    path: /home/nfs
+    state: absent

@@ -1,0 +1,14 @@
+# Reset kubernetes
+- name: Reset kubernetes
+  shell: kubeadm reset --force
+
+- name: Uninstall Kubernetes binaries
+  apt:
+    name: "{{ packages }}"
+    state: absent
+    update_cache: yes
+  vars:
+    packages:
+      - kubelet={{ kubernetes_version }}
+      - kubeadm={{ kubernetes_version }}
+      - kubectl={{ kubernetes_version }}
