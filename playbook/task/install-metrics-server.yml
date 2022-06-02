@@ -1,0 +1,9 @@
+# Install Metrics Server
+- name: Install Metrics Server
+  shell: |
+    helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
+    helm upgrade --install metrics-server metrics-server/metrics-server \
+      --namespace kube-system \
+      --set image.repository=bitnami/metrics-server \
+      --set image.tag={{ metrics_version }} \
+      --set args={--kubelet-insecure-tls=true}

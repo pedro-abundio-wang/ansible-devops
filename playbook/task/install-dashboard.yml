@@ -1,0 +1,34 @@
+# Create Cluster Admin
+- name: Create Cluster Admin
+  copy:
+    dest: $HOME/cluster-admin.yml
+    content: |
+      apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        name: admin-user
+        namespace: kube-system
+      ---
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRoleBinding
+      metadata:
+        name: admin-user
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
+        kind: ClusterRole
+        name: cluster-admin
+      subjects:
+        - kind: ServiceAccount
+          name: admin-user
+          namespace: kube-system
+
+# Install kubernetes dashboard
+- name: Install kubernetes dashboard
+  shell: |
+    kubectl create ns kubernetes-dashboard
+    helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+    helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard \
+      --namespace kubernetes-dashboard \
+      --set service.type=NodePort \
+      --set metricsScraper.enabled=true
+    kubectl apply -f $HOME/cluster-admin.yml

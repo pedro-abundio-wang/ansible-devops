@@ -1,0 +1,9 @@
+# Wait kubernetes control plane startup
+- name: Wait kubernetes control plane startup
+  wait_for:
+    port: 6443
+    delay: 5
+
+# Setup the container networking provider and the network policy engine
+- name: Install calico pod network
+  shell: kubectl apply -f https://projectcalico.docs.tigera.io/manifests/calico.yaml >> pod_network_setup.log

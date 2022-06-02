@@ -1,0 +1,24 @@
+[masters]
+master01 ansible_host=10.110.38.32 ansible_user=root
+
+[workers]
+worker01 ansible_host=10.110.38.23 ansible_user=root
+worker02 ansible_host=10.110.38.36 ansible_user=root
+
+[cicds]
+cicd ansible_host=10.110.38.37 ansible_user=root
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+
+nfs_inet=10.110.38.0/24
+nfs_server=10.110.38.32
+
+harbor_ip=10.110.13.45
+harbor_port=18080
+
+docker_version=5:19.03.15~3-0~ubuntu-bionic
+kubernetes_version=1.22.2-00
+metrics_version=0.6.1
+
+kubernetes_master_ip=10.110.38.32

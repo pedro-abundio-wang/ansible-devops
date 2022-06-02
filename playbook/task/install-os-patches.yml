@@ -1,0 +1,18 @@
+# IPv4 Forward
+- name: IPv4 Forward
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    sysctl_set: yes
+    state: present
+    reload: yes
+
+# Install Jdk
+- name: Install Jdk
+  apt:
+    name: "{{ packages }}"
+    state: present
+    update_cache: yes
+  vars:
+    packages:
+      - openjdk-8-jdk-headless

@@ -1,0 +1,12 @@
+# Generate kube join command for joining the node to the Kubernetes cluster and store the command in the file named join-command.
+- name: Generate join command
+  shell: kubeadm token create --print-join-command
+  register: join_command
+
+# Delegate copy join-command to host which run ansible (Control node)
+- name: Copy join command to local file
+  delegate_to: localhost
+  become: false
+  copy:
+    content: "{{ join_command.stdout_lines[0] }}"
+    dest: /tmp/join-command

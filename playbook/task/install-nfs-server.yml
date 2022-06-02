@@ -1,0 +1,43 @@
+# https://ubuntu.com/server/docs/service-nfs
+
+# Install NFS Server
+- name: Install NFS Server
+  apt:
+    name: "{{ packages }}"
+    state: present
+    update_cache: yes
+  vars:
+    packages:
+      - nfs-kernel-server
+
+# Create NFS directory
+- name: Create NFS directory
+  file:
+    path: /home/nfs
+    state: directory
+    mode: 0755
+
+- name: Make sure NFS Server is running
+  systemd:
+    state: started
+    name: nfs-kernel-server
+
+# Create NFS Export
+- name: Create NFS Export
+  copy:
+    dest: /etc/exports
+    content: |
+      # /etc/exports: the access control list for filesystems which may be exported
+      #               to NFS clients.  See exports(5).
+      #
+      # Example for NFSv2 and NFSv3:
+      # /srv/homes       hostname1(rw,sync,no_subtree_check) hostname2(ro,sync,no_subtree_check)
+      /home/nfs {{ nfs_inet }}(rw,sync,no_subtree_check,no_root_squash)
+      # Example for NFSv4:
+      # /srv/nfs4        gss/krb5i(rw,sync,fsid=0,crossmnt,no_subtree_check)
+      # /srv/nfs4/homes  gss/krb5i(rw,sync,no_subtree_check)
+      #
+
+- name: NFS Export
+  shell: |
+    exportfs -a

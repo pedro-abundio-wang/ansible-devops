@@ -1,0 +1,9 @@
+# Join the nodes to the Kubernetes cluster
+- name: Copy the join command to server location
+  copy:
+    src: /tmp/join-command
+    dest: $HOME/join-command.sh
+    mode: 0777
+
+- name: Join the node to cluster
+  shell: sh $HOME/join-command.sh >> join-command.log
