@@ -1,0 +1,23 @@
+# Install NFS Client
+- name: Install NFS Client
+  apt:
+    name: "{{ packages }}"
+    state: present
+    update_cache: yes
+  vars:
+    packages:
+      - nfs-common
+
+# Create NFS directory
+- name: Create NFS directory
+  file:
+    path: /home/nfs
+    state: directory
+    mode: 0755
+
+- name: NFS Mount
+  mount:
+    src: "{{ nfs_server }}:/home/nfs"
+    path: /home/nfs
+    fstype: nfs
+    state: mounted

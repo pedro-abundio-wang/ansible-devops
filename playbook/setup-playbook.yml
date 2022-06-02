@@ -1,0 +1,32 @@
+---
+- name: Install master servers
+  hosts: masters
+  become: true
+  tasks:
+    - include: task/install-os-patches.yml
+    - include: task/install-docker.yml
+    - include: task/install-kubeadm.yml
+    # ---------------------------------------------------------------------------
+    - include: task/install-nfs-server.yml
+    - include: task/install-kubernetes-cluster.yml
+    - include: task/install-kubernetes-cni.yml
+    - include: task/generate-join-command.yml
+
+- name: Install worker servers
+  hosts: workers
+  become: true
+  tasks:
+    - include: task/install-os-patches.yml
+    - include: task/install-docker.yml
+    - include: task/install-kubeadm.yml
+    # ---------------------------------------------------------------------------
+    - include: task/install-nfs-client.yml
+    - include: task/join-kubernetes-cluster.yml
+
+- name: Install kubernetes addons
+  hosts: masters
+  become: true
+  tasks:
+    - include: task/install-helm.yml
+    - include: task/install-metrics-server.yml
+    - include: task/install-dashboard.yml
