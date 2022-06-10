@@ -37,7 +37,6 @@
       - docker-ce-cli={{ docker_version }}
       - containerd.io
 
-# TODO: should use to_nice_json format
 - name: Docker daemon.json
   copy:
     dest: /etc/docker/daemon.json
