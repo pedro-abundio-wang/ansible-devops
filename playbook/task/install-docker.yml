@@ -36,7 +36,6 @@
       - docker-ce={{ docker_version }}
       - docker-ce-cli={{ docker_version }}
       - containerd.io
-      - docker-compose-plugin
 
 # TODO: should use to_nice_json format
 - name: Docker daemon.json
@@ -77,3 +76,19 @@
     state: restarted
     daemon_reload: yes
     name: docker
+
+- name: Install docker compose
+  shell: curl -SL https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-Linux-x86_64 -o /usr/local/bin/docker-compose
+  warn: false
+
+- name: Apply docker compose executable permissions
+  file:
+    path: /usr/local/bin/docker-compose
+    state: touch
+    mode: u+x,g+x,o+x
+
+- name: Symbolic link docker compose
+  file:
+    src: /usr/local/bin/docker-compose
+    dest: /usr/bin/docker-compose
+    state: link

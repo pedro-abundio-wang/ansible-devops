@@ -1,4 +1,13 @@
 ---
+- name: Install cicd servers
+  hosts: cicds
+  become: true
+  tasks:
+    - include: task/install-os-patches.yml
+    - include: task/install-docker.yml
+    - include: task/install-harbor.yml
+    # ---------------------------------------------------------------------------
+
 - name: Install master servers
   hosts: masters
   become: true
