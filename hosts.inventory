@@ -5,9 +5,6 @@ master01 ansible_host=10.110.38.32 ansible_user=root
 worker01 ansible_host=10.110.38.23 ansible_user=root
 worker02 ansible_host=10.110.38.36 ansible_user=root
 
-[cicds]
-cicd ansible_host=10.110.38.37 ansible_user=root
-
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3
 
