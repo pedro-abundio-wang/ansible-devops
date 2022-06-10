@@ -20,5 +20,6 @@ harbor_port=18080
 docker_version=5:19.03.15~3-0~ubuntu-bionic
 kubernetes_version=1.22.2-00
 metrics_version=0.6.1
+nfs_subdir_external_provisioner_version=v4.0.2
 
 kubernetes_master_ip=10.110.38.32

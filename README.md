@@ -22,6 +22,7 @@ OS: Ubuntu 18.04.6 LTS (bionic) 64-bit
 Ansible: 2.9
 Docker: 19.03.15
 Kubernetes: 1.22.2
+NFS Subdirectory External Provisioner: v4.0.2
 ```
 
 ## Feature List

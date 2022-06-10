@@ -30,3 +30,4 @@
     - include: task/install-helm.yml
     - include: task/install-metrics-server.yml
     - include: task/install-dashboard.yml
+    - include: task/install-nfs-subdir-external-provisioner.yml
