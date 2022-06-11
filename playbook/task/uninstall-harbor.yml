@@ -1,3 +1,5 @@
 # Uninstall Harbor
 - name: Uninstall harbor
   shell: docker-compose down -v >> stop-harbor.log
+  args:
+    chdir: /opt/harbor
