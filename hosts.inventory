@@ -17,9 +17,12 @@ nfs_server=10.110.38.32
 harbor_ip=10.110.38.38
 harbor_port=18080
 
+jenkins_port=28080
+
 docker_version=5:19.03.15~3-0~ubuntu-bionic
 docker_compose_version=1.29.2
 harbor_version=v1.9.4
+jenkins_version=2.332.3
 kubernetes_version=1.22.2-00
 metrics_version=0.6.1
 nfs_subdir_external_provisioner_version=v4.0.2

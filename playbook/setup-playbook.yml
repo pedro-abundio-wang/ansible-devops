@@ -6,6 +6,7 @@
     - include: task/install-os-patches.yml
     - include: task/install-docker.yml
     - include: task/install-harbor.yml
+    - include: task/install-jenkins.yml
     # ---------------------------------------------------------------------------
 
 - name: Install master servers
