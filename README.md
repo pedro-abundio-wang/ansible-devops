@@ -21,9 +21,13 @@ to [How To Configure SSH Key-Based Authentication on a Linux Server](https://www
 OS: Ubuntu 18.04.6 LTS (bionic) 64-bit
 Ansible: 2.9
 Docker: 19.03.15
+Docker Compose: 1.29.2
 Kubernetes: 1.22.2
 Metrics Server: 0.6.1
 NFS Subdirectory External Provisioner: v4.0.2
+
+Harbor: v1.9.4
+Jenkins: 2.332.3
 ```
 
 ## Feature List
@@ -48,10 +52,10 @@ NFS Subdirectory External Provisioner: v4.0.2
     - [x] Linux NFS.
 - [ ] Highly available Kubernetes cluster.
 - [ ] Full of the binaries installation.
-- [ ] CICD:
-    - [ ] Harbor.
-    - [ ] GitLab.
-    - [ ] Jenkins.
+- [x] CICD:
+    - [x] Harbor.
+    - [x] Jenkins.
+    - [ ] GitLab.   
 
 ## TODO List
 
