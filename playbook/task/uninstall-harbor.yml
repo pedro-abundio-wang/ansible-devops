@@ -3,3 +3,7 @@
   shell: docker-compose down -v >> stop-harbor.log
   args:
     chdir: /opt/harbor
+  register: shutdown_ret
+  failed_when:
+    - shutdown_ret.rc != 0
+    - "'docker-compose: not found' not in shutdown_ret.stderr"
