@@ -1,6 +1,10 @@
 # Reset kubernetes
 - name: Reset kubernetes
   shell: kubeadm reset --force
+  register: reset_ret
+  failed_when:
+    - reset_ret.rc != 0
+    - "'kubeadm: not found' not in reset_result.stderr
 
 - name: Uninstall Kubernetes binaries
   apt:
