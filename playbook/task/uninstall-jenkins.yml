@@ -1,0 +1,8 @@
+- name: Uninstall jenkins
+  apt:
+    name: "{{ packages }}"
+    state: absent
+    update_cache: yes
+  vars:
+    packages:
+      - jenkins

@@ -1,21 +1,32 @@
-# Install Jenkins
-- name: Add an apt signing key for Jenkins
-  apt_key:
-    url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
-    state: present
-    keyring: /usr/share/keyrings/jenkins-keyring.asc
+# Install Jenkins offline
+- name: Download jenkins debian package
+  shell: wget -nc https://mirrors.tuna.tsinghua.edu.cn/jenkins/debian-stable/jenkins_{{ jenkins_version }}_all.deb -O /opt/jenkins_{{ jenkins_version }}_all.deb
+  register: wget_ret
+  failed_when:
+    - wget_ret.rc != 0
+    - "'not retrieving' not in wget_ret.stderr"
 
-- name: Add apt repository for Jenkins
-  apt_repository:
-    repo: deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/
-    state: present
-    filename: jenkins
+- name: Ceeate jenkins service systemd directory
+  file:
+    path: /etc/systemd/system/jenkins.service.d/
+    state: directory
+    mode: '0755'
 
-- name: Install docker and its dependecies
-  apt:
-    name: "{{ packages }}"
-    state: present
-    update_cache: yes
-  vars:
-    packages:
-      - jenkins
+- name: Config jenkins service systemd
+  copy:
+    dest: /etc/systemd/system/jenkins.service.d/override.conf
+    content: |
+      [Service]
+      Environment="JENKINS_PORT={{ jenkins_port }}"
+
+- name: Install jenkins debian package
+  shell: dpkg -i /opt/jenkins_{{ jenkins_version }}_all.deb
+
+- name: Install jenkins
+  shell: apt-get install -f
+
+- name: Restart jenkins
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: jenkins

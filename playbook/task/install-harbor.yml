@@ -1,0 +1,25 @@
+# Install Harbor
+- name: Download harbor with wget
+  shell: wget -N https://github.com/goharbor/harbor/releases/download/{{ harbor_version }}/harbor-online-installer-{{ harbor_version }}.tgz -O /opt/harbor-online-installer-{{ harbor_version }}.tgz
+  warn: false
+
+- name: Unarchive harbor
+  unarchive:
+    src: /opt/harbor-online-installer-{{ harbor_version }}.tgz
+    dest: /opt
+    remote_src: yes
+
+- name: Config harbor hostname
+  lineinfile:
+    dest: /opt/harbor/harbor.yml
+    regexp: '^(.*)hostname: (.*)$'
+    line: 'hostname: {{ harbor_ip }}'
+
+- name: Config harbor http access port
+  lineinfile:
+    dest: /opt/harbor/harbor.yml
+    regexp: '^(.*)port: 80(.*)$'
+    line: '  port: {{ harbor_port }}'
+
+- name: Install harbor (download docker images needs few minutes)
+  shell: /opt/harbor/install.sh --with-chartmuseum >> install-harbor.log

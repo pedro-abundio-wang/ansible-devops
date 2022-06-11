@@ -14,3 +14,11 @@
     - include: task/uninstall-kubeadm.yml
     - include: task/uninstall-docker.yml
     - include: task/uninstall-nfs-server.yml
+
+- name: Reset cicd servers
+  hosts: cicds
+  become: true
+  tasks:
+    - include: task/uninstall-jenkins.yml
+    - include: task/uninstall-harbor.yml
+    - include: task/uninstall-docker.yml

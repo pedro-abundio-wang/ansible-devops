@@ -1,4 +1,14 @@
 ---
+- name: Install cicd servers
+  hosts: cicds
+  become: true
+  tasks:
+    - include: task/install-os-patches.yml
+    - include: task/install-docker.yml
+    - include: task/install-harbor.yml
+    - include: task/install-jenkins.yml
+    # ---------------------------------------------------------------------------
+
 - name: Install master servers
   hosts: masters
   become: true
@@ -28,5 +38,6 @@
   become: true
   tasks:
     - include: task/install-helm.yml
-    - include: task/install-metrics-server.yml
     - include: task/install-dashboard.yml
+    - include: task/install-metrics-server.yml
+    - include: task/install-nfs-subdir-external-provisioner.yml
