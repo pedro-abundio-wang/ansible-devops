@@ -19,5 +19,6 @@
   hosts: cicds
   become: true
   tasks:
+    - include: task/uninstall-jenkins.yml
     - include: task/uninstall-harbor.yml
     - include: task/uninstall-docker.yml
