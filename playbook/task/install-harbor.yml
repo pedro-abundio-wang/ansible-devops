@@ -1,7 +1,10 @@
 # Install Harbor
 - name: Download harbor with wget
-  shell: wget -N https://github.com/goharbor/harbor/releases/download/{{ harbor_version }}/harbor-online-installer-{{ harbor_version }}.tgz -O /opt/harbor-online-installer-{{ harbor_version }}.tgz
-  warn: false
+  shell: wget -nc https://github.com/goharbor/harbor/releases/download/{{ harbor_version }}/harbor-online-installer-{{ harbor_version }}.tgz -O /opt/harbor-online-installer-{{ harbor_version }}.tgz
+  register: wget_ret
+  failed_when:
+    - wget_ret.rc != 0
+    - "'not retrieving' not in wget_ret.stderr"
 
 - name: Unarchive harbor
   unarchive:
