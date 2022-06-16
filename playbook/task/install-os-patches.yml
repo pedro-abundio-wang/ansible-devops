@@ -16,3 +16,27 @@
   vars:
     packages:
       - openjdk-8-jdk-headless
+
+# Install Gradle
+- name: Download gradle with wget
+  shell: wget -nc https://downloads.gradle-dn.com/distributions/gradle-{{ gradle_version }}-bin.zip -O /opt/gradle-{{ gradle_version }}-bin.zip
+  register: wget_ret
+  failed_when:
+    - wget_ret.rc != 0
+    - "'not retrieving' not in wget_ret.stderr"
+
+- name: Unarchive gradle
+  unarchive:
+    src: /opt/gradle-{{ gradle_version }}-bin.zip
+    dest: /opt
+    remote_src: yes
+
+- name: Adding the path in the bashrc files
+  lineinfile:
+    dest: /root/.bashrc
+    line: 'export PATH=$PATH:/opt/gradle-{{ gradle_version }}/bin'
+    insertafter: 'EOF'
+    state: present
+
+- name: Source the bashrc file
+  shell: source /root/.bashrc
