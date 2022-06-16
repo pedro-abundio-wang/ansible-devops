@@ -83,3 +83,10 @@ ansible-playbook -i hosts.inventory ./playbook/reset-playbook.yml
 ```shell
 kubectl -n kube-system get secret $(kubectl -n kube-system get sa/admin-user -o jsonpath="{.secrets[0].name}") -o go-template="{{.data.token | base64decode}}"
 ```
+
+### Access jenkins
+
+```shell
+cat /var/lib/jenkins/secrets/initialAdminPassword
+admin/password
+```
