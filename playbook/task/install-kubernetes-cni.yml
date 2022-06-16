@@ -7,3 +7,11 @@
 # Setup the container networking provider and the network policy engine
 - name: Install calico pod network
   shell: kubectl apply -f https://projectcalico.docs.tigera.io/manifests/calico.yaml >> pod_network_setup.log
+
+# Names incorporating Firmware/BIOS provided index numbers for on-board devices (eno1)
+# Names incorporating Firmware/BIOS provided PCI Express hotplug slot index numbers (ens1)
+# Names incorporating physical/geographical location of the connector of the hardware (enp2s0)
+# Names incorporating the interfaces's MAC address (enx78e7d1ea46da)
+# Classic, unpredictable kernel-native ethX naming (eth0)
+- name: Config calico IP_AUTODETECTION_METHOD
+  shell: kubectl set env daemonset/calico-node -n kube-system IP_AUTODETECTION_METHOD=interface=en.*,eth.*
