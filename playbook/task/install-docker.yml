@@ -48,7 +48,7 @@
           "max-size": "100m"
         },
         "storage-driver": "overlay2",
-        "insecure-registries": ["{{ harbor_ip }}:{{ harbor_port }}", "0.0.0.0"],
+        "insecure-registries": ["{{ hostvars['harbor'].ansible_host }}:{{ harbor_port }}", "0.0.0.0"],
         "registry-mirrors": [
           "https://registry.docker-cn.co",
           "https://hub-mirror.c.163.com"

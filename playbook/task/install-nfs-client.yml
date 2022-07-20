@@ -17,7 +17,7 @@
 
 - name: NFS Mount
   mount:
-    src: "{{ nfs_server }}:/home/nfs"
+    src: "{{ hostvars['master'].ansible_host }}:/home/nfs"
     path: /home/nfs
     fstype: nfs
     state: mounted

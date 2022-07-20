@@ -1,22 +1,24 @@
 [masters]
-master01 ansible_host=10.110.38.32 ansible_user=root
+master ansible_host=10.110.38.32 ansible_user=root
 
 [workers]
-worker01 ansible_host=10.110.38.23 ansible_user=root
-worker02 ansible_host=10.110.38.36 ansible_user=root
+metal ansible_host=10.110.38.23 ansible_user=root
+wood ansible_host=10.110.38.36 ansible_user=root
+water ansible_host=10.110.38.37 ansible_user=root
+fire ansible_host=10.110.38.40 ansible_user=root
+earth ansible_host=10.110.38.41 ansible_user=root
 
 [cicds]
-cicd ansible_host=10.110.38.38 ansible_user=root
+jenkins ansible_host=10.110.38.38 ansible_user=root
+gitlab ansible_host=10.110.38.39 ansible_user=root
+harbor ansible_host=10.110.38.26 ansible_user=root
 
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3
 
 nfs_inet=10.110.38.0/24
-nfs_server=10.110.38.32
 
-harbor_ip=10.110.38.38
 harbor_port=18080
-
 jenkins_port=28080
 
 docker_version=5:19.03.15~3-0~ubuntu-bionic
@@ -26,6 +28,6 @@ jenkins_version=2.332.3
 gradle_version=7.2
 kubernetes_version=1.22.2-00
 metrics_version=0.6.1
+metrics_chart_version=3.8.2
 nfs_subdir_external_provisioner_version=v4.0.2
-
-kubernetes_master_ip=10.110.38.32
+nfs_subdir_external_provisioner_chart_version=4.0.16
