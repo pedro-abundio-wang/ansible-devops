@@ -16,7 +16,7 @@
   lineinfile:
     dest: /opt/harbor/harbor.yml
     regexp: '^(.*)hostname: (.*)$'
-    line: 'hostname: {{ harbor_ip }}'
+    line: 'hostname: {{ hostvars["harbor"].ansible_host }}'
 
 - name: Config harbor http access port
   lineinfile:

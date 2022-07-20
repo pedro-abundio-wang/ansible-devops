@@ -6,3 +6,10 @@
   vars:
     packages:
       - jenkins
+
+- name: Clean jenkins data
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - /var/lib/jenkins

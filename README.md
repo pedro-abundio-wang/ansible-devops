@@ -55,7 +55,7 @@ Jenkins: 2.332.3
 - [x] CICD:
     - [x] Harbor.
     - [x] Jenkins.
-    - [ ] GitLab.   
+    - [x] GitLab.   
 
 ## TODO List
 
@@ -89,4 +89,10 @@ kubectl -n kube-system get secret $(kubectl -n kube-system get sa/admin-user -o 
 ```shell
 cat /var/lib/jenkins/secrets/initialAdminPassword
 admin/password
+```
+
+### Access gitlab
+
+```shell
+cat /etc/gitlab/initial_root_password
 ```
