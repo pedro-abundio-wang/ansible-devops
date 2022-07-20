@@ -15,10 +15,22 @@
     - include: task/uninstall-docker.yml
     - include: task/uninstall-nfs-server.yml
 
-- name: Reset cicd servers
-  hosts: cicds
+- name: Reset gitlab server
+  hosts: gitlab
+  become: true
+  tasks:
+    - include: task/uninstall-gitlab.yml
+
+- name: Reset jenkins server
+  hosts: jenkins
   become: true
   tasks:
     - include: task/uninstall-jenkins.yml
+    - include: task/uninstall-docker.yml
+
+- name: Reset harbor server
+  hosts: harbor
+  become: true
+  tasks:
     - include: task/uninstall-harbor.yml
     - include: task/uninstall-docker.yml

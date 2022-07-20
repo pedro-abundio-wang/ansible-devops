@@ -1,2 +1,51 @@
 # https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-gitlab-on-ubuntu-18-04
-# cat /etc/gitlab/initial_root_password
+
+# Install Gitlab and its dependent components
+- name: Install packages that allow apt to be used over HTTPS
+  apt:
+    name: "{{ packages }}"
+    state: present
+    update_cache: yes
+  vars:
+    packages:
+      - ca-certificates
+      - curl
+
+# Download Gitlab
+- name: Download gitlab with wget
+  shell: wget -nc https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh -O /opt/script.deb.sh
+  register: wget_ret
+  failed_when:
+    - wget_ret.rc != 0
+    - "'not retrieving' not in wget_ret.stderr"
+
+- name: Apply gitlab script executable permissions
+  file:
+    path: /opt/script.deb.sh
+    state: touch
+    mode: u+x,g+x,o+x
+
+# Execute gitlab install script
+- name: Execute gitlab install script
+  shell: /opt/script.deb.sh >> gitlab-script.log
+
+# Install Gitlab
+- name: Install Gitlab (download gitlab needs few minutes)
+  apt:
+    name: "{{ packages }}"
+    state: present
+    update_cache: yes
+  vars:
+    packages:
+      - gitlab-ce
+
+# Config gitlab external url
+- name: Config gitlab external url
+  lineinfile:
+    dest: /etc/gitlab/gitlab.rb
+    regexp: '^external_url (.*)$'
+    line: 'external_url "http://{{ hostvars["gitlab"].ansible_host }}"'
+
+# Reconfigure Gitlab
+- name: Reconfigure Gitlab (needs few minutes)
+  shell: gitlab-ctl reconfigure >> gitlab-reconfigure.log

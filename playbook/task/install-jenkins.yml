@@ -25,6 +25,12 @@
 - name: Install jenkins
   shell: apt-get install -f
 
+- name: Adding jenkins user to docker group
+  user:
+    name: jenkins
+    groups: docker
+    append: yes
+
 - name: Restart jenkins
   systemd:
     state: restarted

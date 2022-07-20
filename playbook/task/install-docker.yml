@@ -48,7 +48,7 @@
           "max-size": "100m"
         },
         "storage-driver": "overlay2",
-        "insecure-registries": ["{{ harbor_ip }}:{{ harbor_port }}", "0.0.0.0"],
+        "insecure-registries": ["{{ hostvars['harbor'].ansible_host }}:{{ harbor_port }}", "0.0.0.0"],
         "registry-mirrors": [
           "https://registry.docker-cn.co",
           "https://hub-mirror.c.163.com"
@@ -77,8 +77,11 @@
     name: docker
 
 - name: Install docker compose
-  shell: curl -SL https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-Linux-x86_64 -o /usr/local/bin/docker-compose
-  warn: false
+  shell: wget -nc https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-Linux-x86_64 -O /usr/local/bin/docker-compose
+  register: wget_ret
+  failed_when:
+    - wget_ret.rc != 0
+    - "'not retrieving' not in wget_ret.stderr"
 
 - name: Apply docker compose executable permissions
   file:

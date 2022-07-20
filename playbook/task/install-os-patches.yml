@@ -6,13 +6,3 @@
     sysctl_set: yes
     state: present
     reload: yes
-
-# Install Jdk
-- name: Install Jdk
-  apt:
-    name: "{{ packages }}"
-    state: present
-    update_cache: yes
-  vars:
-    packages:
-      - openjdk-8-jdk-headless
