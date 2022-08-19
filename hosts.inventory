@@ -2,11 +2,9 @@
 master ansible_host=10.110.38.32 ansible_user=root
 
 [workers]
-metal ansible_host=10.110.38.23 ansible_user=root
-wood ansible_host=10.110.38.36 ansible_user=root
-water ansible_host=10.110.38.37 ansible_user=root
-fire ansible_host=10.110.38.40 ansible_user=root
-earth ansible_host=10.110.38.41 ansible_user=root
+metal ansible_host=10.110.13.25 ansible_user=root
+wood ansible_host=10.110.13.40 ansible_user=root
+water ansible_host=10.110.13.45 ansible_user=root
 
 [cicds]
 jenkins ansible_host=10.110.38.38 ansible_user=root
@@ -16,7 +14,7 @@ harbor ansible_host=10.110.38.26 ansible_user=root
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3
 
-nfs_inet=10.110.38.0/24
+nfs_inet=10.110.0.0/16
 
 harbor_port=18080
 jenkins_port=28080

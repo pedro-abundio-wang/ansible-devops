@@ -69,11 +69,15 @@ Jenkins: 2.332.3
 # check ansible hosts can communication with each other 
 ansible -i hosts.inventory all -m ping
 # ---------------------------------------------------------------------------
-# install environment
-ansible-playbook -i hosts.inventory ./playbook/setup-playbook.yml
+# install cicd environment
+ansible-playbook -i hosts.inventory ./playbook/setup-cicd.yml
+# install kubernetes environment
+ansible-playbook -i hosts.inventory ./playbook/setup-kubernetes.yml
 # ---------------------------------------------------------------------------
-# reset environment
-ansible-playbook -i hosts.inventory ./playbook/reset-playbook.yml
+# reset kubernetes environment
+ansible-playbook -i hosts.inventory ./playbook/reset-kubernetes.yml
+# reset cicd environment
+ansible-playbook -i hosts.inventory ./playbook/reset-cicd.yml
 ```
 
 ## FAQ

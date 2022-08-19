@@ -1,20 +1,4 @@
 ---
-- name: Reset worker server
-  hosts: workers
-  become: true
-  tasks:
-    - include: task/uninstall-kubeadm.yml
-    - include: task/uninstall-docker.yml
-    - include: task/uninstall-nfs-client.yml
-
-- name: Reset master server
-  hosts: masters
-  become: true
-  tasks:
-    - include: task/uninstall-kubeadm.yml
-    - include: task/uninstall-docker.yml
-    - include: task/uninstall-nfs-server.yml
-
 - name: Reset gitlab server
   hosts: gitlab
   become: true

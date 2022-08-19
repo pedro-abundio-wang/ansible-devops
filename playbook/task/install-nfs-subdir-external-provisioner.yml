@@ -7,6 +7,6 @@
       --namespace kube-system \
       --set image.repository=eipwork/nfs-subdir-external-provisioner \
       --set image.tag={{ nfs_subdir_external_provisioner_version }} \
-      --set storageClass.defaultClass=true
+      --set storageClass.defaultClass=true \
       --set nfs.server={{ hostvars['master'].ansible_host }} \
       --set nfs.path=/home/nfs
