@@ -8,84 +8,146 @@ management in simple text files.
 
 ## Prerequisites
 
-Ansible should be installed in your machine. Refer to
-the [Ansible installation guide](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) for
-platform specific installation.
+1. Ansible should be installed in your machine. Refer to
+   the [Ansible installation guide](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
+   for platform specific installation.
 
-Refer
-to [How To Configure SSH Key-Based Authentication on a Linux Server](https://www.digitalocean.com/community/tutorials/how-to-configure-ssh-key-based-authentication-on-a-linux-server)
+2. SSH-Based login should be config between control-node and managed-node. Refer
+   to [How To Configure SSH Key-Based Authentication on a Linux Server](https://www.digitalocean.com/community/tutorials/how-to-configure-ssh-key-based-authentication-on-a-linux-server)
 
-## Version Information
+### Hardware Prerequisites
+
+Harbor
+
+| Resource | Minimum | Recommended |
+|----------|---------|-------------|
+| CPU      | 2 CPU   | 4 CPU       |
+| Mem      | 4 GB    | 8 GB        |
+| Disk     | 40 GB   | 160 GB      |
+
+Jenkins
+
+| Resource | Minimum | Recommended |
+|----------|---------|-------------|
+| Mem      | 256 MB  | 4 GB        |
+| Disk     | 1 GB    | 50 GB       |
+
+Gitlab
+
+| Resource | Minimum | Recommended |
+|----------|---------|-------------|
+| CPU      | 4 CPU   | 8 CPU       |
+| Mem      | 4 GB    | 8 GB        |
+| Disk     | 2.5 GB  |             |
+
+Kubernetes
 
 ```text
-OS: Ubuntu 18.04.6 LTS (bionic) 64-bit
-Ansible: 2.9
-Docker: 19.03.15
-Docker Compose: 1.29.2
-Kubernetes: 1.22.2
-Metrics Server: 0.6.1
-NFS Subdirectory External Provisioner: v4.0.2
+2 GB or more of RAM per machine
+2 CPUs or more per machine
+```
 
-Harbor: v1.9.4
-Jenkins: 2.332.3
+### OS Prerequisites
+
+Ubuntu Server 22.04.2 LTS
+
+## Usage
+
+### Install Ansible
+
+```shell
+sudo sh install.sh
+```
+
+### Setup Platform (single mode)
+
+```shell
+# ---------------------------------------------------------------------------
+# check ansible hosts can communication with each other 
+ansible -i single-hosts.inventory all -m ping
+# ---------------------------------------------------------------------------
+# install kubernetes environment
+ansible-playbook -i single-hosts.inventory ../playbook/setup-kubernetes.yml
+# remove kubernetes master node taint
+sudo kubectl taint nodes $(sudo kubectl get nodes --selector=node-role.kubernetes.io/master -o jsonpath='{.items[].metadata.name}') node-role.kubernetes.io/master:NoSchedule-
+# install cicd environment
+ansible-playbook -i single-hosts.inventory ../playbook/setup-cicd.yml
+```
+
+### Reset Platform (single mode)
+
+```shell
+# ---------------------------------------------------------------------------
+# check ansible hosts can communication with each other 
+ansible -i single-hosts.inventory all -m ping
+# ---------------------------------------------------------------------------
+# reset cicd environment
+ansible-playbook -i single-hosts.inventory ../playbook/reset-cicd.yml
+# reset kubernetes environment
+ansible-playbook -i single-hosts.inventory ../playbook/reset-kubernetes.yml
+```
+
+### Setup Platform (cluster mode)
+
+```shell
+# ---------------------------------------------------------------------------
+# check ansible hosts can communication with each other 
+ansible -i multiple-hosts.inventory all -m ping
+# ---------------------------------------------------------------------------
+# install cicd environment
+ansible-playbook -i multiple-hosts.inventory ../playbook/setup-cicd.yml
+# install kubernetes environment
+ansible-playbook -i multiple-hosts.inventory ../playbook/setup-kubernetes.yml
+```
+
+### Reset Platform (cluster mode)
+
+```shell
+# ---------------------------------------------------------------------------
+# check ansible hosts can communication with each other 
+ansible -i multiple-hosts.inventory all -m ping
+# ---------------------------------------------------------------------------
+# reset kubernetes environment
+ansible-playbook -i multiple-hosts.inventory ../playbook/reset-kubernetes.yml
+# reset cicd environment
+ansible-playbook -i multiple-hosts.inventory ../playbook/reset-cicd.yml
 ```
 
 ## Feature List
 
 - [x] Kubernetes addons:
-    - [x] Helm.
-    - [x] Metrics Server.
-    - [x] Kubernetes Dashboard.
-    - [ ] Istio.
-    - [ ] Weave Scope.
-    - [ ] NGINX Ingress Controller.
-    - [ ] Promethues Monitoring.
-    - [ ] EFK Logging.
+    - [x] Helm
+    - [x] Metrics Server
+    - [ ] Kubernetes Dashboard
+    - [ ] Istio
+    - [ ] Weave Scope
+    - [ ] Nginx Ingress Controller
+    - [ ] Promethues Monitoring
+    - [ ] EFK Logging
 - [x] Support container network:
-    - [x] Calico.
-    - [ ] Flannel.
+    - [x] Calico
 - [x] Support container runtime:
-    - [x] Docker.
-    - [ ] Containerd.
-    - [ ] CRI-O.
+    - [x] Docker
+    - [x] Containerd
 - [x] Support network file system:
-    - [x] Linux NFS.
-- [ ] Highly available Kubernetes cluster.
-- [ ] Full of the binaries installation.
+    - [x] Linux NFS
 - [x] CICD:
-    - [x] Harbor.
-    - [x] Jenkins.
-    - [x] GitLab.   
-
-## TODO List
-
-- [ ] docker daemon.json should use to_nice_json format
-- [ ] log files should save in unified folder
-
-## Usage
-
-```shell
-# ---------------------------------------------------------------------------
-# check ansible hosts can communication with each other 
-ansible -i hosts.inventory all -m ping
-# ---------------------------------------------------------------------------
-# install cicd environment
-ansible-playbook -i hosts.inventory ./playbook/setup-cicd.yml
-# install kubernetes environment
-ansible-playbook -i hosts.inventory ./playbook/setup-kubernetes.yml
-# ---------------------------------------------------------------------------
-# reset kubernetes environment
-ansible-playbook -i hosts.inventory ./playbook/reset-kubernetes.yml
-# reset cicd environment
-ansible-playbook -i hosts.inventory ./playbook/reset-cicd.yml
-```
+    - [x] Harbor
+    - [x] Jenkins
+    - [x] GitLab
 
 ## FAQ
 
 ### How to access kubernetes dashboard
 
+```text
+# edit hosts
+# use `dashboard.kubernetes.cluster.com` as default hosts
+<kubernetes-cluster-master-ip> dashboard.kubernetes.cluster.com
+```
+
 ```shell
-kubectl -n kube-system get secret $(kubectl -n kube-system get sa/admin-user -o jsonpath="{.secrets[0].name}") -o go-template="{{.data.token | base64decode}}"
+sudo kubectl -n kube-system get secret $(sudo kubectl -n kube-system get sa/admin-user -o jsonpath="{.secrets[0].name}") -o go-template="{{.data.token | base64decode}}"
 ```
 
 ### Access jenkins

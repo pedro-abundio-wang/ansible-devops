@@ -2,7 +2,7 @@
 - name: Install NFS Subdirectory External Provisioner
   shell: |
     helm repo add nfs-subdir-external-provisioner https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/
-    helm upgrade --install nfs-subdir-external-provisioner nfs-subdir-external-provisioner/nfs-subdir-external-provisioner \
+    helm upgrade nfs-subdir-external-provisioner nfs-subdir-external-provisioner/nfs-subdir-external-provisioner --install \
       --version {{ nfs_subdir_external_provisioner_chart_version }} \
       --namespace kube-system \
       --set image.repository=eipwork/nfs-subdir-external-provisioner \

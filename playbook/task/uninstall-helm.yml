@@ -1,0 +1,9 @@
+# Uninstall Helm
+- name: Uninstall Helm
+  apt:
+    name: "{{ packages }}"
+    state: absent
+    update_cache: yes
+  vars:
+    packages:
+      - helm

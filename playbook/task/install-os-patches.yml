@@ -6,3 +6,12 @@
     sysctl_set: yes
     state: present
     reload: yes
+
+- name: Install net-tools
+  apt:
+    name: "{{ packages }}"
+    state: present
+    update_cache: yes
+  vars:
+    packages:
+      - net-tools

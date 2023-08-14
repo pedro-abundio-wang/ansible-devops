@@ -1,0 +1,30 @@
+[masters]
+master ansible_host=10.110.38.51 ansible_user=root
+
+[cicds]
+jenkins ansible_host=10.110.38.51 ansible_user=root
+gitlab ansible_host=10.110.38.51 ansible_user=root
+harbor ansible_host=10.110.38.51 ansible_user=root
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+
+nfs_inet=10.110.0.0/16
+
+harbor_port=18080
+jenkins_port=28080
+gitlab_port=38080
+
+harbor_version=v1.9.4
+jenkins_version=2.401.3
+gradle_version=7.2
+
+docker_version=20.10.24
+kubernetes_version=1.23.17-00
+calico_version=v3.20
+
+metrics_version=0.6.1
+metrics_chart_version=3.8.2
+nfs_subdir_external_provisioner_version=v4.0.2
+nfs_subdir_external_provisioner_chart_version=4.0.16
+cert_manager_version=v1.12.3
