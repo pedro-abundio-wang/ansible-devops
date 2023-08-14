@@ -118,10 +118,11 @@ ansible-playbook -i multiple-hosts.inventory ../playbook/reset-cicd.yml
 - [x] Kubernetes addons:
     - [x] Helm
     - [x] Metrics Server
-    - [ ] Kubernetes Dashboard
+    - [x] Nginx Ingress Controller
+    - [x] Kubernetes Dashboard
+    - [x] Cert Manager
     - [ ] Istio
     - [ ] Weave Scope
-    - [ ] Nginx Ingress Controller
     - [ ] Promethues Monitoring
     - [ ] EFK Logging
 - [x] Support container network:
