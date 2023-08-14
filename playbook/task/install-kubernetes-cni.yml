@@ -6,7 +6,7 @@
 
 # Setup the container networking provider and the network policy engine
 - name: Install calico pod network
-  shell: kubectl apply -f https://projectcalico.docs.tigera.io/manifests/calico.yaml >> pod_network_setup.log
+  shell: kubectl apply -f https://docs.projectcalico.org/archive/{{ calico_version }}/manifests/calico.yaml >> /tmp/pod_network_setup.log
 
 # Names incorporating Firmware/BIOS provided index numbers for on-board devices (eno1)
 # Names incorporating Firmware/BIOS provided PCI Express hotplug slot index numbers (ens1)

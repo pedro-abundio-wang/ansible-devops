@@ -1,0 +1,8 @@
+- name: Install cert manager
+  shell: |
+    kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/{{ cert_manager_version }}/cert-manager.crds.yaml
+    kubectl create ns cert-manager
+    helm repo add jetstack https://charts.jetstack.io
+    helm upgrade cert-manager jetstack/cert-manager --install \
+      --namespace cert-manager \
+      --version {{ cert_manager_version }}

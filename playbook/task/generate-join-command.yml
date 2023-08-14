@@ -8,5 +8,5 @@
   delegate_to: localhost
   become: false
   copy:
-    content: "{{ join_command.stdout_lines[0] }}"
+    content: "{{ join_command.stdout }}"
     dest: /tmp/join-command

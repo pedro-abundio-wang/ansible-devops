@@ -25,4 +25,4 @@
     line: '  port: {{ harbor_port }}'
 
 - name: Install harbor (download docker images needs few minutes)
-  shell: /opt/harbor/install.sh --with-chartmuseum >> install-harbor.log
+  shell: /opt/harbor/install.sh --with-chartmuseum >> /tmp/install-harbor.log

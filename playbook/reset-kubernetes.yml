@@ -3,14 +3,14 @@
   hosts: workers
   become: true
   tasks:
-    - include: task/uninstall-kubeadm.yml
-    - include: task/uninstall-docker.yml
-    - include: task/uninstall-nfs-client.yml
+    - include_tasks: task/uninstall-kubeadm.yml
+    - include_tasks: task/uninstall-docker.yml
+    - include_tasks: task/uninstall-nfs-client.yml
 
 - name: Reset master server
   hosts: masters
   become: true
   tasks:
-    - include: task/uninstall-kubeadm.yml
-    - include: task/uninstall-docker.yml
-    - include: task/uninstall-nfs-server.yml
+    - include_tasks: task/uninstall-kubeadm.yml
+    - include_tasks: task/uninstall-docker.yml
+    - include_tasks: task/uninstall-nfs-server.yml

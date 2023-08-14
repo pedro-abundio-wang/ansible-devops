@@ -3,22 +3,24 @@
   hosts: gitlab
   become: true
   tasks:
-    - include: task/install-gitlab.yml
-    # ---------------------------------------------------------------------------
+    - include_tasks: task/install-os-patches.yml
+    - include_tasks: task/install-gitlab.yml
 
 - name: Install jenkins server
   hosts: jenkins
   become: true
   tasks:
-    - include: task/install-docker.yml
-    - include: task/install-jdk.yml
-    - include: task/install-jenkins.yml
-    # ---------------------------------------------------------------------------
+    - include_tasks: task/install-os-patches.yml
+    - include_tasks: task/install-docker.yml
+    - include_tasks: task/install-jdk.yml
+    - include_tasks: task/install-gradle.yml
+    - include_tasks: task/install-jenkins.yml
 
 - name: Install harbor server
   hosts: harbor
   become: true
   tasks:
-    - include: task/install-docker.yml
-    - include: task/install-harbor.yml
-    # ---------------------------------------------------------------------------
+    - include_tasks: task/install-os-patches.yml
+    - include_tasks: task/install-docker.yml
+    - include_tasks: task/install-harbor.yml
+

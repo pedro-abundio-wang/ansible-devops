@@ -2,7 +2,7 @@
 - name: Install Metrics Server
   shell: |
     helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
-    helm upgrade --install metrics-server metrics-server/metrics-server \
+    helm upgrade metrics-server metrics-server/metrics-server --install \
       --version {{ metrics_chart_version }} \
       --namespace kube-system \
       --set image.repository=bitnami/metrics-server \

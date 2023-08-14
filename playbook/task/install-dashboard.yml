@@ -27,8 +27,11 @@
   shell: |
     kubectl create ns kubernetes-dashboard
     helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
-    helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard \
+    helm upgrade kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --install \
       --namespace kubernetes-dashboard \
-      --set service.type=NodePort \
+      --set app.ingress.hosts=dashboard.kubernetes.cluster.com \
+      --set cert-manager.enabled=false \
+      --set nginx.enabled=false \
+      --set metrics-server.enabled=false \
       --set metricsScraper.enabled=true
     kubectl apply -f $HOME/cluster-admin.yml

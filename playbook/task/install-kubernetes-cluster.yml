@@ -1,18 +1,9 @@
-# Fix bug for https://github.com/containerd/containerd/issues/4581
-- name: Remove file /etc/containerd/config.toml
-  file:
-    path: /etc/containerd/config.toml
-    state: absent
-
-- name: Restart containerd
-  systemd:
-    state: restarted
-    daemon_reload: yes
-    name: containerd
-
 # Initialize the Kubernetes cluster with kubeadm
-- name: Initialize the Kubernetes cluster using kubeadm (need few minutes)
-  shell: kubeadm init --kubernetes-version $(kubeadm version -o short) --control-plane-endpoint {{ hostvars['master'].ansible_host }} --pod-network-cidr=192.168.0.0/16 --image-repository registry.aliyuncs.com/google_containers >> kubeadm-init.log
+- name: Pull kubernetes image ahead (need few minutes)
+  shell: kubeadm config images pull --image-repository registry.aliyuncs.com/google_containers >> /tmp/kubeadm-init.log
+
+- name: Initialize the Kubernetes cluster using kubeadm
+  shell: kubeadm init --kubernetes-version $(kubeadm version -o short) --control-plane-endpoint {{ hostvars['master'].ansible_host }} --pod-network-cidr=192.168.0.0/16 --image-repository registry.aliyuncs.com/google_containers >> /tmp/kubeadm-init.log
 
 # Kubernetes cluster admin config
 - name: Create .kube directory

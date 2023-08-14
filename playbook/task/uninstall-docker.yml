@@ -5,9 +5,12 @@
     update_cache: yes
   vars:
     packages:
-      - docker-ce={{ docker_version }}
-      - docker-ce-cli={{ docker_version }}
+      - docker-ce
+      - docker-ce-cli
       - containerd.io
+      - docker-buildx-plugin
+      - docker-compose
+      - docker-compose-plugin
 
 - name: Clean docker data
   file:
@@ -16,11 +19,3 @@
   with_items:
     - /var/lib/docker
     - /var/lib/containerd
-
-- name: Uninstall docker compose
-  file:
-    path: "{{ item }}"
-    state: absent
-  with_items:
-    - /usr/local/bin/docker-compose
-    - /usr/bin/docker-compose

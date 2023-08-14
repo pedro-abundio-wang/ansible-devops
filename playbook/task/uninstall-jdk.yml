@@ -1,8 +1,8 @@
-# Install Jdk
-- name: Install Jdk
+# Uninstall Jdk
+- name: Uninstall Jdk
   apt:
     name: "{{ packages }}"
-    state: present
+    state: absent
     update_cache: yes
   vars:
     packages:
