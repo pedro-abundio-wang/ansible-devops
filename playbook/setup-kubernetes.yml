@@ -33,3 +33,10 @@
     - include_tasks: tash/install-ingress-nginx.yml
     - include_tasks: tash/install-cert-manager.yml
     - include_tasks: tash/install-dashboard.yml
+
+- name: Install data center
+  hosts: masters
+  become: true
+  tasks:
+    - include_tasks: tash/install-data-center.yml
+

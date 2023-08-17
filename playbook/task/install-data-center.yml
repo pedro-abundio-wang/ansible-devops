@@ -1,0 +1,44 @@
+- name: Create data center namespace
+  shell: |
+    kubectl create ns data-center
+
+- name: Install grafana
+  shell: |
+    helm upgrade grafana oci://registry-1.docker.io/bitnamicharts/grafana --install \
+      --namespace data-center \
+      --set ingress.enabled=true \
+      --set ingress.ingressClassName=nginx \
+      --set ingress.tls=true \
+      --set ingress.selfSigned=true \
+      --set ingress.hostname=grafana.kubernetes.cluster.com
+
+- name: Install minio
+  shell: |
+    helm upgrade minio oci://registry-1.docker.io/bitnamicharts/minio --install \
+      --namespace data-center \
+      --set ingress.enabled=true \
+      --set ingress.ingressClassName=nginx \
+      --set ingress.tls=true \
+      --set ingress.selfSigned=true \
+      --set ingress.hostname=minio.kubernetes.cluster.com
+
+- name: Install influxdb
+  shell: |
+    helm upgrade influxdb oci://registry-1.docker.io/bitnamicharts/influxdb --install \
+      --namespace data-center \
+      --set ingress.enabled=true \
+      --set ingress.ingressClassName=nginx \
+      --set ingress.tls=true \
+      --set ingress.selfSigned=true \
+      --set ingress.hostname=influxdb.kubernetes.cluster.com
+
+- name: Install elasticsearch
+  shell: |
+    helm upgrade elasticsearch oci://registry-1.docker.io/bitnamicharts/elasticsearch --install \
+      --namespace data-center
+
+- name: Install redis
+  shell: |
+    helm upgrade redis-master-replicas oci://registry-1.docker.io/bitnamicharts/redis --install \
+      --namespace data-center \
+      --set architecture=replication

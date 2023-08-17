@@ -121,10 +121,12 @@ ansible-playbook -i multiple-hosts.inventory ../playbook/reset-cicd.yml
     - [x] Nginx Ingress Controller
     - [x] Kubernetes Dashboard
     - [x] Cert Manager
-    - [ ] Istio
-    - [ ] Weave Scope
-    - [ ] Promethues Monitoring
-    - [ ] EFK Logging
+- [x] Data center:
+    - [x] Grafana UI
+    - [x] InfluxDB
+    - [x] Minio
+    - [x] Elasticsearch
+    - [x] Redis master replicas
 - [x] Support container network:
     - [x] Calico
 - [x] Support container runtime:
