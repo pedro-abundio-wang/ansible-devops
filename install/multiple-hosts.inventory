@@ -32,3 +32,4 @@ metrics_version=0.6.1
 metrics_chart_version=3.8.2
 nfs_subdir_external_provisioner_version=v4.0.2
 nfs_subdir_external_provisioner_chart_version=4.0.16
+cert_manager_version=v1.12.3
