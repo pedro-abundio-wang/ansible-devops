@@ -17,7 +17,7 @@ management in simple text files.
 
 ### Hardware Prerequisites
 
-Harbor
+#### Harbor
 
 | Resource | Minimum | Recommended |
 |----------|---------|-------------|
@@ -25,14 +25,14 @@ Harbor
 | Mem      | 4 GB    | 8 GB        |
 | Disk     | 40 GB   | 160 GB      |
 
-Jenkins
+#### Jenkins
 
 | Resource | Minimum | Recommended |
 |----------|---------|-------------|
 | Mem      | 256 MB  | 4 GB        |
 | Disk     | 1 GB    | 50 GB       |
 
-Gitlab
+#### Gitlab
 
 | Resource | Minimum | Recommended |
 |----------|---------|-------------|
@@ -40,7 +40,7 @@ Gitlab
 | Mem      | 4 GB    | 8 GB        |
 | Disk     | 2.5 GB  |             |
 
-Kubernetes
+#### Kubernetes
 
 ```text
 2 GB or more of RAM per machine
@@ -50,6 +50,32 @@ Kubernetes
 ### OS Prerequisites
 
 Ubuntu Server 22.04.2 LTS
+
+## Feature List
+
+- [x] Support container runtime:
+    - [x] Docker
+    - [x] Containerd
+- [x] Kubernetes addons:
+    - [x] Helm
+    - [x] Metrics Server
+    - [x] Nginx Ingress Controller
+    - [x] Kubernetes Dashboard
+    - [x] Cert Manager
+- [x] Support container network:
+    - [x] Calico
+- [x] Support network file system:
+    - [x] Linux NFS
+- [x] CICD:
+    - [x] Harbor
+    - [x] Jenkins
+    - [x] GitLab
+- [x] Data center:
+    - [x] Grafana UI
+    - [x] InfluxDB
+    - [x] Minio
+    - [x] Elasticsearch
+    - [x] Redis master replicas
 
 ## Usage
 
@@ -113,41 +139,9 @@ ansible-playbook -i multiple-hosts.inventory ../playbook/reset-kubernetes.yml
 ansible-playbook -i multiple-hosts.inventory ../playbook/reset-cicd.yml
 ```
 
-## Feature List
-
-- [x] Kubernetes addons:
-    - [x] Helm
-    - [x] Metrics Server
-    - [x] Nginx Ingress Controller
-    - [x] Kubernetes Dashboard
-    - [x] Cert Manager
-- [x] Data center:
-    - [x] Grafana UI
-    - [x] InfluxDB
-    - [x] Minio
-    - [x] Elasticsearch
-    - [x] Redis master replicas
-- [x] Support container network:
-    - [x] Calico
-- [x] Support container runtime:
-    - [x] Docker
-    - [x] Containerd
-- [x] Support network file system:
-    - [x] Linux NFS
-- [x] CICD:
-    - [x] Harbor
-    - [x] Jenkins
-    - [x] GitLab
-
 ## FAQ
 
 ### How to access kubernetes dashboard
-
-```text
-# edit hosts
-# use `dashboard.kubernetes.cluster.com` as default hosts
-<kubernetes-cluster-master-ip> dashboard.kubernetes.cluster.com
-```
 
 ```shell
 sudo kubectl -n kube-system get secret $(sudo kubectl -n kube-system get sa/admin-user -o jsonpath="{.secrets[0].name}") -o go-template="{{.data.token | base64decode}}"
@@ -162,6 +156,19 @@ admin/password
 
 ### Access gitlab
 
+By default, a Linux package installation automatically generates a password for the initial administrator user account (
+root) and stores it to /etc/gitlab/initial_root_password for at least 24 hours. For security reasons, after 24 hours,
+this file is automatically removed by the first gitlab-ctl reconfigure.
+
 ```shell
 cat /etc/gitlab/initial_root_password
 ```
+
+### Ingress hostname
+
+| Service name         | hostname                         |
+|----------------------|----------------------------------|
+| Kubernetes dashboard | dashboard.kubernetes.cluster.com |
+| Minio                | minio.kubernetes.cluster.com     |
+| InfluxDB             | influxdb.kubernetes.cluster.com  |
+| Grafana              | grafana.kubernetes.cluster.com   |
