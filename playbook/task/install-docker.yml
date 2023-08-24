@@ -43,7 +43,7 @@
       - docker-ce-cli=5:{{ docker_version }}~3-0~ubuntu-{{ linux_codename.stdout }}
       - containerd.io
       - docker-buildx-plugin
-      - docker-compose
+      - docker-compose={{ docker_compose_version }}
       - docker-compose-plugin
 
 - name: Docker daemon.json
@@ -86,22 +86,3 @@
     state: restarted
     daemon_reload: yes
     name: docker
-
-#- name: Install docker compose
-#  shell: wget -nc https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-Linux-x86_64 -O /usr/local/bin/docker-compose
-#  register: wget_ret
-#  failed_when:
-#    - wget_ret.rc != 0
-#    - "'not retrieving' not in wget_ret.stderr"
-
-#- name: Apply docker compose executable permissions
-#  file:
-#    path: /usr/local/bin/docker-compose
-#    state: touch
-#    mode: u+x,g+x,o+x
-#
-#- name: Symbolic link docker compose
-#  file:
-#    src: /usr/local/bin/docker-compose
-#    dest: /usr/bin/docker-compose
-#    state: link

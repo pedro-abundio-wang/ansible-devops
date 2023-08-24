@@ -17,9 +17,10 @@ gitlab_port=38080
 
 harbor_version=v1.9.4
 jenkins_version=2.401.3
-gradle_version=7.2
+gradle_version=7.6
 
 docker_version=20.10.24
+docker_compose_version=1.29.2-1
 kubernetes_version=1.23.17-00
 calico_version=v3.20
 
