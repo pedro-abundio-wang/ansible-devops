@@ -43,7 +43,7 @@
       - docker-ce-cli=5:{{ docker_version }}~3-0~ubuntu-{{ linux_codename.stdout }}
       - containerd.io
       - docker-buildx-plugin
-      - docker-compose
+      - docker-compose={{ docker_compose_version }}
       - docker-compose-plugin
 
 - name: Docker daemon.json
